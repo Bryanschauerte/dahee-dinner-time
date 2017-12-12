@@ -4,54 +4,89 @@ import QuestionOne from '../stateless/question-one';
 import QuestionTwo from '../stateless/question-two';
 import QuestionThree from '../stateless/question-three';
 
+
 class Main extends Component {
-    constructor(){
+    constructor() {
         super();
         this.state = {
             mainCourse: {
-                picked:'',
+                picked: '',
                 choices: ['Chicken', 'Fish', 'Beef', 'Pizza']
             },
             howToCook: {
                 picked: '',
                 chicken: ['Fried', 'Boiled', 'Baked', 'BBQ'],
-                fish:['Fried', 'Boiled', 'Baked', 'BBQ'],
-                beef:['Fried', 'Baked', 'BBQ', 'Boiled']
+                fish: ['Fried', 'Boiled', 'Baked', 'BBQ'],
+                beef: ['Fried', 'Boiled', 'Baked', 'BBQ']
             },
             sides: {
                 picked: '',
-                rice: ['Fried Rice', 'Cheese and Broccili', 'Soy Rice', 'Chicken Flavored', 'Plain Rice'],
+                rice: ['Fried Rice', 'Cheese and Broccoli', 'Soy Rice', 'Chicken Flavored', 'Plain Rice'],
                 vegetables: ['Carrots', 'Mixed Vegetables', 'Peas', 'Broccoli', 'Mushrooms', 'Onions'],
-                potatoes: ['French Fries', 'Baked Potato', 'Roasted Potato', 'Raw Potatos', 'Potato Salad', 'Mashed Potatoes'],
-                salad: ['Marshmellow Salad', 'Fruit Salad', 'Regular Salad']
+                potatoes: ['French Fries', 'Baked', 'Rosted', 'Salad', 'Mash'],
+                salad: ['Fruit', 'Marshmellow', 'Regular']
             },
             qNumber: 0
         };
         this.showQuestion = this.showQuestion.bind(this);
-        this.changeQuestionNumber = this.changeQuestionNumber.bind(this)
+        this.changeQuestionNumber = this.changeQuestionNumber.bind(this);
+        this.pickedChoice = this.pickedChoice.bind(this);
+
     }
 
-    changeQuestionNumber(){
-        this.setState({qNumber: this.state.qNumber + 1})
+    changeQuestionNumber() {
+        this.setState({ qNumger: this.state.qNumber + 1 })
     }
 
-    showQuestion(){
-        if(this.state.qNumber === 0){
-            return (<QuestionOne/>);
+
+    pickedChoice(question, selection) {
+        const partOfStateToChange = this.state[question];
+        // this.pickedChoice('howToCook', 'Fried') =>  this.state.howToCook= {
+        //     picked:'Fried',
+        //     chicken:['Fried','Boiled','Baked','BBQ'],
+        //     fish:['Fried','Boiled','Baked','BBQ'],
+        //     beef:['Fried','Boiled','Baked','BBQ']
+        // }
+
+        partOfStateToChange.picked = selection;
+        this.setState({
+            partOfStateToChange,
+            qNumber: this.state.qNumber + 1
+        })
+
+    }
+
+    showQuestion() {
+        if (this.state.qNumber === 0) {
+            return (
+                <QuestionOne
+                    handlePickChoice={
+                        (question, selection) => this.pickedChoice(question, selection)
+                    } />
+            );
         }
-        else if(this.state.qNumber === 1){
-            return (<QuestionTwo />);
+        else if (this.state.qNumber === 1) {
+            return (<QuestionTwo
+                handlePickChoice={
+                    (question, selection) => this.pickedChoice(question, selection)
+                } />);
         }
-        else if(this.state.qNumber === 2){
-            return (<QuestionThree />);
+        else if (this.state.qNumer === 2) {
+            return (<QuestionThree
+                handlePickChoice={
+                    (question, selection) => this.pickedChoice(question, selection)
+                } />);
         } else {
-            return (<h1>DINNER TIME BABY</h1>);
+            return (<h1>Dinner Time</h1>);
         }
     }
+    render() {
 
-    render(){
+        console.log(this.state, 'state')
         return (<div>{this.showQuestion()}</div>);
     }
 }
+
+
 
 export default Main;

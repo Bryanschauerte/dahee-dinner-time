@@ -1,19 +1,29 @@
 import './stateless.css';
 import React, { Component } from 'react';
-import chicken from './Chicken_sombrero.gif';
+import chicken from './img/chicken.png'
+import cow from './img/cow.png'
+import fish from './img/fish.png'
+import pizza from './img/pizza.png'
 
-const QuestionOne = () =>{
+
+const QuestionOne = ({ handlePickChoice }) => {
+    console.log(handlePickChoice, 'handlePickChoice')
+    // handlePickChoice('sides', 'hot dog anubis sounds yummy');
     return (
         <div className="question-container">
-            <h1 className="question-title">STATeLESS QUSTION ONE</h1>
+            <h1 className="question-title">What do you feel like?</h1>
             <div className="question-choices">
                 <div className="question-picture">
-                    <img src={chicken} className="App-logo" alt="chicken" />
+                    <img onClick={() => handlePickChoice('mainCourse', 'Chicken')} src={chicken} className="App-logo" alt="chicken" />
+                    <img onClick={() => handlePickChoice('mainCourse', 'Beef')} src={cow} className="App-logo" alt="cow" />
+                    <img onClick={() => handlePickChoice('mainCourse', 'Fish')} src={fish} className="App-logo" alt="fish" />
+                    <img onClick={() => handlePickChoice('mainCourse', 'Pizza')} src={pizza} className="App-logo" alt="pizza" />
                 </div>
+                <div className="question-user-selected"></div>
+
             </div>
-            <div className="question-user-selected"></div>
         </div>
-);
+    );
 };
 
 export default QuestionOne;
